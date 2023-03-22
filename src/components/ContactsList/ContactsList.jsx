@@ -2,10 +2,11 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Contacts } from './ContactsList.styled';
 import { ContactsListItem } from 'components/ContactListItem/ContactListItem';
+import { getFilter, getContacts } from 'redux/selectors';
 
 const ContactsList = () => {
-  const contacts = useSelector(state => state.phonebook.contacts);
-  const filter = useSelector(state => state.filter.filter);
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
   const normalizedFilter = filter.toLowerCase();
   const visibleContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(normalizedFilter)
@@ -17,8 +18,8 @@ const ContactsList = () => {
     `No matches founded`
   ) : (
     <Contacts>
-      {visibleContacts.map(({ id, name, number }) => (
-        <ContactsListItem key={id} id={id} name={name} number={number} />
+      {visibleContacts.map(({ id, name, phone }) => (
+        <ContactsListItem key={id} id={id} name={name} phone={phone} />
       ))}
     </Contacts>
   );

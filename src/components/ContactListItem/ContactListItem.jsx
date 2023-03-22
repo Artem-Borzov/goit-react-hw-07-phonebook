@@ -2,13 +2,13 @@ import React from 'react';
 import { Contact, DeleteBtn } from './ContactListItem.styled';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/contactsSlice';
+import { deleteContact } from 'redux/operations';
 
-export const ContactsListItem = ({ name, number, id }) => {
+export const ContactsListItem = ({ name, phone, id }) => {
   const dispatch = useDispatch();
   return (
     <Contact>
-      {name}: {number}
+      {name}: {phone}
       <DeleteBtn
         type="button"
         id={id}
@@ -22,6 +22,6 @@ export const ContactsListItem = ({ name, number, id }) => {
 
 ContactsListItem.propTypes = {
   name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
 };

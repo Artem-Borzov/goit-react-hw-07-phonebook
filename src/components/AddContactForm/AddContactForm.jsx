@@ -5,24 +5,25 @@ import {
   SubmitButton,
 } from './AddContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
-import shortid from 'shortid';
+import { addContact } from 'redux/operations';
+// import shortid from 'shortid';
+import { getContacts } from 'redux/selectors';
 
 export default function AddContactForm() {
-  const contacts = useSelector(state => state.phonebook.contacts);
+  const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.target;
     const name = form.elements.name.value;
-    const number = form.elements.number.value;
+    const phone = form.elements.phone.value;
 
-    const contact = {
-      id: shortid.generate(),
-      name,
-      number,
-    };
+    // const contact = {
+    //   id: shortid.generate(),
+    //   name,
+    //   number,
+    // };
 
     if (
       contacts.find(
@@ -31,7 +32,7 @@ export default function AddContactForm() {
     ) {
       return alert(`${name} is already in contacts.`);
     }
-    dispatch(addContact(contact));
+    dispatch(addContact({ name, phone }));
     form.reset();
   };
   return (
@@ -50,7 +51,7 @@ export default function AddContactForm() {
         Number
         <FormInput
           type="tel"
-          name="number"
+          name="phone"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
